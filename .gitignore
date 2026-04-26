@@ -53,3 +53,9 @@ node_modules
 .env.production
 logs
 *.log
+*.zip
+*.tar
+*.gz
+node_modules
+.next
+.env*
