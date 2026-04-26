@@ -1,0 +1,16 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+
+  /* keep this */
+  min-height: 100vh;
+
+  /* ✅ critical for Lenis + sticky */
+  height: auto;
+  overflow: visible;
+  position: relative;
+}
+.main {
+  flex: 1;
+  min-height: 0;
+}

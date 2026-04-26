@@ -1,0 +1,582 @@
+// ==========================================
+// ELEVENLABS-INSPIRED NAVBAR STYLES
+// Clean, minimal, premium aesthetic
+// With transparent-to-dark scroll effect
+// ==========================================
+
+// ==========================================
+// KEYFRAME ANIMATIONS
+// ==========================================
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+// ==========================================
+// HEADER BASE STYLES
+// Transparent by default, opaque on scroll
+// ==========================================
+
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  // Default transparent state
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  
+  // Scrolled state - dark/opaque
+  &.scrolled {
+    border-bottom: 1px solid rgba(244, 244, 245, 0.6);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 
+      0 1px 0 0 rgba(0, 0, 0, 0.03),
+      0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+// ==========================================
+// MEGA MENU DROPDOWN STYLES
+// ==========================================
+
+.megaMenuDropdown {
+  animation: slideInFromTop 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+  will-change: transform, opacity;
+  
+  // Glass morphism effect
+  .megaMenuCard {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+  }
+}
+
+// Category headings with subtle text shadow
+.categoryHeading {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  letter-spacing: 0.1em;
+  position: relative;
+  
+  // Subtle underline effect
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 24px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(24, 24, 27, 0.2), transparent);
+    opacity: 0.4;
+  }
+}
+
+// Menu item hover effect with translation
+.menuItem {
+  position: relative;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:hover {
+    transform: translateX(2px);
+    
+    // Subtle left border on hover
+    &::before {
+      opacity: 1;
+      height: 70%;
+    }
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 50%;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(to bottom, #18181b, transparent);
+    opacity: 0;
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(-50%);
+    border-radius: 2px;
+  }
+}
+
+// ==========================================
+// CTA BUTTON ENHANCED STYLES
+// ==========================================
+
+.ctaButton {
+  position: relative;
+  overflow: hidden;
+  
+  box-shadow: 
+    0 2px 8px 0 rgba(0, 0, 0, 0.12);
+  
+  &:hover {
+    box-shadow: 
+      0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  }
+  
+  // Shimmer effect on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 600ms ease;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// ==========================================
+// NAVIGATION LINK EFFECTS
+// ==========================================
+
+.navLink {
+  position: relative;
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  // Subtle bottom indicator on hover
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #18181b, transparent);
+    transform: translateX(-50%);
+    transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    border-radius: 2px;
+  }
+  
+  &:hover::after {
+    width: 60%;
+    opacity: 0.25;
+  }
+  
+  &.active {
+    color: #18181b;
+    font-weight: 600;
+    
+    &::after {
+      width: 60%;
+      opacity: 0.5;
+      background: #18181b;
+    }
+  }
+  
+  // White underline for transparent navbar state
+  &.transparent {
+    &::after {
+      background: linear-gradient(to right, transparent, #ffffff, transparent);
+    }
+    
+    &:hover::after {
+      opacity: 0.4;
+    }
+    
+    &.active::after {
+      background: #ffffff;
+      opacity: 0.7;
+    }
+  }
+}
+
+// ==========================================
+// MOBILE MENU ANIMATIONS
+// ==========================================
+
+@keyframes slideInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileMenu {
+  animation: slideInMobile 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.mobileMenuItem {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: #18181b;
+    opacity: 0;
+    transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(-50%);
+    border-radius: 0 2px 2px 0;
+  }
+  
+  &:hover::before {
+    height: 60%;
+    opacity: 0.15;
+  }
+}
+
+// ==========================================
+// HAMBURGER MENU
+// ==========================================
+
+.hamburger {
+  span {
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: center;
+  }
+  
+  &:hover span {
+    background-color: #09090b;
+  }
+  
+  // White hamburger for transparent state
+  &.transparent {
+    span {
+      background-color: #ffffff;
+    }
+    
+    &:hover span {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+// ==========================================
+// GLASS EFFECT FOR DROPDOWN
+// ==========================================
+
+.glassEffect {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.99) 100%
+  );
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  
+  // Subtle inner shadow for depth
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+    0 20px 50px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.04);
+}
+
+// ==========================================
+// BOTTOM CTA GRADIENT
+// ==========================================
+
+.bottomCta {
+  background: linear-gradient(
+    135deg,
+    rgba(250, 250, 250, 0.4) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(250, 250, 250, 0.3) 100%
+  );
+  position: relative;
+  
+  // Subtle top border glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(244, 244, 245, 0.7),
+      transparent
+    );
+  }
+}
+
+// ==========================================
+// BUTTON SCALE ANIMATIONS
+// ==========================================
+
+.buttonScale {
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// ==========================================
+// LOADING SPINNER
+// ==========================================
+
+.spinner {
+  border-width: 2px;
+  border-color: rgb(212, 212, 216);
+  border-top-color: transparent;
+  animation: spin 600ms linear infinite;
+  will-change: transform;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ==========================================
+// DROPDOWN ARROW ANIMATION
+// ==========================================
+
+.dropdownArrow {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+// ==========================================
+// FOCUS STATES (ACCESSIBILITY)
+// ==========================================
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(24, 24, 27, 0.3);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+// Transparent state focus
+.transparent {
+  button:focus-visible,
+  a:focus-visible {
+    outline-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// ==========================================
+// RESPONSIVE OPTIMIZATIONS
+// ==========================================
+
+@media (max-width: 1024px) {
+  // Reduce animation complexity on tablets
+  * {
+    animation-duration: 200ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  // Minimal animations on mobile
+  .megaMenuDropdown,
+  .mobileMenu {
+    animation-duration: 200ms !important;
+  }
+  
+  .menuItem:hover {
+    transform: none;
+  }
+}
+
+// ==========================================
+// HOVER EFFECT ENHANCEMENTS
+// ==========================================
+
+.hoverLift {
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.08),
+      0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// ==========================================
+// BORDER GRADIENTS
+// ==========================================
+
+.borderGradient {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(244, 244, 245, 0.9),
+      rgba(228, 228, 231, 0.5)
+    );
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+}
+
+// ==========================================
+// PREMIUM SHADOW LAYERS
+// ==========================================
+
+.premiumShadow {
+  box-shadow: 
+    0 1px 0 0 rgba(0, 0, 0, 0.02),
+    0 2px 4px 0 rgba(0, 0, 0, 0.03),
+    0 8px 16px -4px rgba(0, 0, 0, 0.04);
+}
+
+.premiumShadowLarge {
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.03);
+}
+
+// ==========================================
+// PERFORMANCE OPTIMIZATIONS
+// ==========================================
+
+.willChange {
+  will-change: transform, opacity;
+}
+
+.gpuAccelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+// ==========================================
+// REDUCED MOTION SUPPORT
+// ==========================================
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ==========================================
+// TEXT COLORS FOR TRANSPARENT STATE
+// ==========================================
+
+.textTransparent {
+  color: #ffffff;
+  
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.textScrolled {
+  color: #18181b;
+  
+  &:hover {
+    color: rgba(24, 24, 27, 0.7);
+  }
+}
+
+// ==========================================
+// MOBILE TOGGLE TRANSPARENT STATE
+// ==========================================
+
+.mobileToggle {
+  &.transparent {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  &.scrolled {
+    border-color: rgba(244, 244, 245, 0.6);
+    background-color: #ffffff;
+    
+    &:hover {
+      background-color: rgba(244, 244, 245, 0.5);
+    }
+  }
+}

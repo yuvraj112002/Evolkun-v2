@@ -1,0 +1,217 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-heading: 'DM Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 80%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 9%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 0 0% 9%;
+  --foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 0 0% 30%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 98%;
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 98%;
+}
+
+/* Scoped theme for lovable/vite survey page only */
+.survey-theme {
+  --background: 50 20% 98%;
+  --foreground: 220 30% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 220 30% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 30% 12%;
+
+  --primary: 158 55% 42%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 155 25% 94%;
+  --secondary-foreground: 158 55% 30%;
+
+  --muted: 220 15% 95%;
+  --muted-foreground: 220 10% 50%;
+
+  --accent: 155 70% 88%;
+  --accent-foreground: 158 55% 25%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 220 15% 91%;
+  --input: 220 15% 91%;
+  --ring: 158 55% 42%;
+
+  --radius: 1rem;
+
+  --survey-highlight: 155 70% 85%;
+  --survey-card-shadow: 0 2px 16px -2px hsl(220 30% 12% / 0.06);
+  --survey-card-shadow-hover: 0 8px 30px -4px hsl(158 55% 42% / 0.15);
+  --survey-glow: 158 55% 42%;
+}
+
+.survey-theme.dark {
+  --background: 220 25% 6%;
+  --foreground: 210 40% 96%;
+  --card: 220 25% 9%;
+  --card-foreground: 210 40% 96%;
+  --popover: 220 25% 9%;
+  --popover-foreground: 210 40% 96%;
+  --primary: 158 55% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 158 20% 15%;
+  --secondary-foreground: 158 55% 70%;
+  --muted: 220 20% 15%;
+  --muted-foreground: 220 10% 60%;
+  --accent: 158 30% 18%;
+  --accent-foreground: 158 55% 75%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 220 20% 18%;
+  --input: 220 20% 18%;
+  --ring: 158 55% 45%;
+  --survey-highlight: 158 40% 20%;
+  --survey-card-shadow: 0 2px 16px -2px hsl(0 0% 0% / 0.3);
+  --survey-card-shadow-hover: 0 8px 30px -4px hsl(158 55% 45% / 0.2);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body);
+  }
+
+  .survey-theme {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .survey-theme .survey-highlight {
+    background: linear-gradient(
+      120deg,
+      hsl(var(--survey-highlight)) 0%,
+      hsl(var(--survey-highlight)) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 85%;
+    padding: 0 4px;
+  }
+
+  .survey-theme .survey-card {
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    border-radius: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--survey-card-shadow);
+  }
+
+  .survey-theme .survey-card:hover {
+    box-shadow: var(--survey-card-shadow-hover);
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-1px);
+  }
+
+  .survey-theme .survey-card-selected {
+    border-color: hsl(var(--primary));
+    background-color: hsl(var(--secondary));
+    box-shadow: var(--survey-card-shadow-hover);
+  }
+
+  .survey-theme .survey-cta {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .survey-theme .survey-cta:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px -4px hsl(var(--survey-glow) / 0.35);
+  }
+
+  .survey-theme .survey-cta:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .survey-theme .survey-cta:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .survey-theme .greet-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(158 65% 55%) 100%
+    );
+    box-shadow: 0 12px 40px -8px hsl(var(--survey-glow) / 0.4);
+  }
+
+  .survey-theme .match-ring {
+    background: conic-gradient(
+      hsl(var(--primary)) 0deg,
+      hsl(158 65% 60%) 120deg,
+      hsl(155 70% 75%) 240deg,
+      hsl(var(--primary)) 360deg
+    );
+  }
+}

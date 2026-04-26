@@ -1,0 +1,629 @@
+// EvonEngineSection.module.scss
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding: 8rem 0;
+  padding-bottom: 1rem;
+  background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+  overflow: hidden;
+
+  /* ✅ big perf boost: skip offscreen paint/layout (works great with Lenis) */
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+
+    /* ✅ NO blur filters; gradients are cheap */
+    opacity: 1;
+    transform: translateZ(0);
+  }
+
+  &::before {
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.09) 0%, transparent 70%);
+  }
+
+  &::after {
+    bottom: -30%;
+    left: -15%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(67, 233, 123, 0.07) 0%, transparent 70%);
+  }
+
+  @media (max-width: 768px) {
+    padding: 5rem 0;
+
+    &::before,
+    &::after {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media (max-width: 640px) {
+    padding: 0 1.5rem;
+  }
+}
+
+// ============================================
+// HEADER
+// ============================================
+
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 3.5rem;
+  }
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+
+  background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.quote {
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: #555;
+  font-style: italic;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.7;
+  padding: 1.5rem 2rem;
+
+  /* ❌ remove backdrop-filter blur (expensive)
+     ✅ replace with “glass-like” cheap gradient */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.78),
+    rgba(255, 255, 255, 0.55)
+  );
+  border-left: 3px solid #667eea;
+  border-radius: 8px;
+
+  /* subtle border for the glass feel */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+  @media (max-width: 640px) {
+    padding: 1.2rem 1.5rem;
+  }
+}
+
+// ============================================
+// WRAPPER & SVG
+// ============================================
+
+.stepsWrapper {
+  position: relative;
+  margin-bottom: 4rem;
+}
+
+.connectorSvg {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+
+  /* ✅ compositing hint */
+  will-change: transform;
+
+  @media (min-width: 1024px) {
+    display: block;
+  }
+}
+
+// if you add drawPath/staticPath from my earlier JS refactor:
+.drawPath {
+  opacity: 1;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: dash 1.2s ease-in-out forwards;
+}
+.staticPath {
+  opacity: 1;
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+// ============================================
+// GRID
+// ============================================
+
+.stepsGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+// ============================================
+// CARD (THIS IS WHERE THE BIG WIN IS)
+// ============================================
+
+.stepCard {
+  position: relative;
+
+  /* ❌ remove backdrop-filter blur
+     ✅ keep “glass” with gradient */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.82)
+  );
+
+  border: 1px solid rgba(230, 230, 230, 0.9);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+  cursor: pointer;
+
+  /* ✅ isolate paint/layout; huge for scroll */
+  contain: layout paint;
+
+  /* ✅ GPU-friendly */
+  transform: translateZ(0);
+  will-change: transform;
+
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.02),
+    0 10px 20px rgba(0, 0, 0, 0.04);
+
+  /* ❌ expensive mask-composite border trick
+     ✅ replace with a cheaper border highlight */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.28);
+    box-shadow:
+      0 10px 20px rgba(0, 0, 0, 0.07),
+      0 18px 40px rgba(102, 126, 234, 0.08);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .cardGlow {
+      opacity: 0.14;
+    }
+
+    .iconContainer {
+      transform: scale(1.08) rotate(4deg);
+    }
+
+    .stepTitle {
+      color: #1a1a1a;
+    }
+
+    .progressFill {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+/* ✅ Glow: REMOVE blur filter, use a radial gradient instead (cheap) */
+.cardGlow {
+  position: absolute;
+  inset: -30%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.35s ease;
+
+  /* no filter blur */
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.0), rgba(0, 0, 0, 0.0));
+}
+
+/* You set background inline in React; keep it but no blur */
+.cardGlow {
+  /* just a hint to keep it on compositor */
+  transform: translateZ(0);
+}
+
+// ============================================
+// BADGE
+// ============================================
+
+.stepBadge {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+
+  @media (max-width: 640px) {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+// ============================================
+// ICON
+// ============================================
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 640px) {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.iconContainer {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+
+  transition: transform 0.28s ease;
+  position: relative;
+  overflow: hidden;
+
+  /* ✅ cheap shine - keep it, but simpler transition */
+  &::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.26) 50%,
+      transparent 70%
+    );
+    transform: rotate(45deg) translateX(-110%);
+    transition: transform 0.5s ease;
+  }
+
+  .stepCard:hover &::after {
+    transform: rotate(45deg) translateX(110%);
+  }
+
+  @media (max-width: 640px) {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 640px) {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// ============================================
+// CONTENT
+// ============================================
+
+.content {
+  margin-bottom: 1.25rem;
+}
+
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2a2a2a;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+
+  @media (max-width: 640px) {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.stepDesc {
+  font-size: 0.9375rem;
+  color: #666;
+  line-height: 1.6;
+  font-weight: 400;
+
+  @media (max-width: 640px) {
+    font-size: 0.875rem;
+  }
+}
+
+// ============================================
+// CHIPS
+// ============================================
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  background: rgba(102, 126, 234, 0.08);
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.15);
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  .stepCard:hover & {
+    background: rgba(102, 126, 234, 0.12);
+    border-color: rgba(102, 126, 234, 0.25);
+  }
+
+  @media (max-width: 640px) {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.65rem;
+  }
+}
+
+// ============================================
+// PROGRESS BAR
+// ============================================
+
+.progressBar {
+  height: 3px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+
+  /* ✅ remove shadow glow (expensive-ish), keep subtle */
+  box-shadow: none;
+
+  transition: width 0.5s ease;
+  will-change: width;
+}
+
+/* ✅ no hover animations on touch devices (helps mobile a lot) */
+@media (hover: none) {
+  .stepCard:hover .progressFill {
+    width: 0%;
+  }
+}
+
+// ============================================
+// CTA
+// ============================================
+
+.ctaWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+
+  box-shadow:
+    0 4px 14px rgba(102, 126, 234, 0.25),
+    0 10px 30px rgba(102, 126, 234, 0.12);
+
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  position: relative;
+  overflow: hidden;
+
+  transform: translateZ(0);
+  will-change: transform;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    transition: left 0.45s ease;
+  }
+
+  &:hover {
+    box-shadow:
+      0 6px 20px rgba(102, 126, 234, 0.32),
+      0 15px 40px rgba(102, 126, 234, 0.16);
+    transform: translateY(-2px);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    padding: 0.875rem 2rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.ctaArrow {
+  font-size: 1.25rem;
+  transition: transform 0.25s ease;
+}
+
+// ============================================
+// MOBILE OPT
+// ============================================
+
+@media (max-width: 640px) {
+  .stepsGrid {
+    gap: 1.5rem;
+  }
+
+  .stepCard {
+    border-radius: 16px;
+  }
+}
+
+// ============================================
+// ACCESSIBILITY
+// ============================================
+
+@media (prefers-reduced-motion: reduce) {
+  .stepCard,
+  .iconContainer,
+  .progressFill,
+  .ctaButton {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .connectorSvg {
+    display: none;
+  }
+}
+
+// ============================================
+// PRINT
+// ============================================
+
+@media print {
+  .section {
+    background: white;
+    padding: 2rem 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .stepCard {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .ctaButton {
+    display: none;
+  }
+}

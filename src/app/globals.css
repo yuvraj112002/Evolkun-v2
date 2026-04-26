@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+:root {
+  --app-font-heading: var(--font-heading);
+  --app-font-body: var(--font-body);
+
+  --background: 0 0% 100%;
+  --foreground: 0 0% 9%;
+  --border: 0 0% 90%;
+  --input: 0 0% 90%;
+  --ring: 0 0% 80%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 9%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 0 0% 9%;
+  --foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 0 0% 30%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 98%;
+  --popover: 0 0% 9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 98%;
+}
+
+/* Scoped theme for survey page only */
+.survey-theme {
+  --background: 50 20% 98%;
+  --foreground: 220 30% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 220 30% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 30% 12%;
+
+  --primary: 158 55% 42%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 155 25% 94%;
+  --secondary-foreground: 158 55% 30%;
+
+  --muted: 220 15% 95%;
+  --muted-foreground: 220 10% 50%;
+
+  --accent: 155 70% 88%;
+  --accent-foreground: 158 55% 25%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 220 15% 91%;
+  --input: 220 15% 91%;
+  --ring: 158 55% 42%;
+
+  --radius: 1rem;
+
+  --survey-highlight: 155 70% 85%;
+  --survey-card-shadow: 0 2px 16px -2px hsl(220 30% 12% / 0.06);
+  --survey-card-shadow-hover: 0 8px 30px -4px hsl(158 55% 42% / 0.15);
+  --survey-glow: 158 55% 42%;
+}
+
+.survey-theme.dark {
+  --background: 220 25% 6%;
+  --foreground: 210 40% 96%;
+  --card: 220 25% 9%;
+  --card-foreground: 210 40% 96%;
+  --popover: 220 25% 9%;
+  --popover-foreground: 210 40% 96%;
+  --primary: 158 55% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 158 20% 15%;
+  --secondary-foreground: 158 55% 70%;
+  --muted: 220 20% 15%;
+  --muted-foreground: 220 10% 60%;
+  --accent: 158 30% 18%;
+  --accent-foreground: 158 55% 75%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 220 20% 18%;
+  --input: 220 20% 18%;
+  --ring: 158 55% 45%;
+  --survey-highlight: 158 40% 20%;
+  --survey-card-shadow: 0 2px 16px -2px hsl(0 0% 0% / 0.3);
+  --survey-card-shadow-hover: 0 8px 30px -4px hsl(158 55% 45% / 0.2);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: hsl(var(--border));
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--app-font-body), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--app-font-heading), sans-serif;
+    font-weight: 600;
+  }
+
+  .survey-theme {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--app-font-body), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

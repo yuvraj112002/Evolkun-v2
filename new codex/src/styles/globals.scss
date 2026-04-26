@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+
+:root {
+  --font-main: 'DM Sans', sans-serif;
+  --font-heading: 'DM Sans', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  --color-primary: #6439ff;
+  --color-secondary: #4f75ff;
+  --color-accent: #00ccdd;
+  --color-light: #7cf5ff;
+  --color-dark: #292f36;
+  --shadow-pop: 0 4px 20px rgba(100, 57, 255, 0.15);
+  --input-height: 56px;
+  --input-border-radius: 30px;
+  --input-border: 2px solid rgba(100, 57, 255, 0.2);
+  --input-focus-border: var(--color-primary);
+  --input-padding: 0 1.5rem;
+  --input-font: var(--font-body);
+  --input-font-size: 1rem;
+  --input-color: var(--color-dark);
+  --input-bg: white;
+  --input-transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  --input-focus-shadow: 0 0 0 3px rgba(100, 57, 255, 0.1);
+  --form-bg: rgb(244, 244, 244);
+}
+
+html {
+  scroll-behavior: auto !important;
+  scroll-snap-type: none !important;
+  overscroll-behavior: none;
+  -ms-scroll-chaining: none;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #f6f6f6;
+  overflow-anchor: none;
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video,
+iframe,
+canvas {
+  max-width: 100%;
+  height: auto;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+button,
+a,
+input,
+textarea,
+select,
+[role="button"],
+[onclick] {
+  pointer-events: auto !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+}

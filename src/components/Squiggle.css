@@ -1,0 +1,22 @@
+svg.squiggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80vw;
+  height: 160vw;
+  /* z-index: 1; */
+}
+
+svg.squiggle path {
+  stroke-width: 0.5rem;
+}
+
+a {
+  color: currentColor;
+  text-decoration-color: #cd3c2f;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-color: #000000;
+}
